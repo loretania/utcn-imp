@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------------------
 static void PrintInt(Interp &interp)
 {
-  auto v = interp.PopInt();
+  auto v = interp.PeekInt();
   std::cout << v;
   interp.Push<int64_t>(v);
 }

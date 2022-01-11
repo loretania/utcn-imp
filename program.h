@@ -6,7 +6,6 @@
 #include <cstdint>
 #include <cstring>
 #include <vector>
-#include <ostream>
 
 
 
@@ -26,13 +25,15 @@ enum class Opcode : uint8_t {
 
   JUMP_FALSE,
   JUMP,
-  STOP
-};
+  STOP,
 
-/**
- * Prints the opcode to a stream, for debugging.
- */
-std::ostream &operator<<(std::ostream &os, Opcode op);
+  PUSH_INT,
+  MUL,
+  DIV,
+  MOD,
+  SUB,
+  EQUALITY,
+};
 
 
 /**

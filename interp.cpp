@@ -4,6 +4,7 @@
 #include "program.h"
 
 #include <iostream>
+#include <limits>
 
 
 
@@ -51,6 +52,9 @@ void Interp::Run()
       case Opcode::ADD: {
         auto rhs = PopInt();
         auto lhs = PopInt();
+        if (lhs > std::numeric_limits<int64_t>::max() - rhs) {
+          throw RuntimeError("Invalid sum value!");
+        }
         Push(lhs + rhs);
         continue;
       }
@@ -78,6 +82,44 @@ void Interp::Run()
       }
       case Opcode::STOP: {
         return;
+      }
+      case Opcode::PUSH_INT: {
+        Push(prog_.Read<int64_t>(pc_));
+        continue;
+      }
+      case Opcode::MUL: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        Push(lhs * rhs);
+        continue;
+      }
+      case Opcode::DIV: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        Push(lhs / rhs);
+        continue;
+      }
+      case Opcode::MOD: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        Push(lhs % rhs);
+        continue;
+      }
+        case Opcode::SUB: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        Push(lhs - rhs);
+        continue;
+      }
+      case Opcode::EQUALITY: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        long value = 0;
+        if (lhs == rhs) {
+          value = 1;
+        }
+        Push(value);
+        continue;
       }
     }
   }
